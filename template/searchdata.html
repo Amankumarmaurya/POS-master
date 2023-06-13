@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searchdata</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+
+   
+    <div class="container">
+        <h1 class="text-center">Results</h1>
+        {% if search %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>Message:</strong> {{ message }}.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <p>Search Results.</p>
+            Your search query: <b>{{ search }}</b> matches documents.
+            <br>
+        {% endif %}
+        
+                
+                <div class="form-contianer">
+                    <!-- <h2 class="text-center mt-3">Inventory Data</h2> -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">SN</th>
+                                <th scope="col">date</th>
+                                <!-- <th scope="col">sells</th> -->
+                                <!-- <th scope="col">Quantity</th>
+                  <th scope="col">Amount</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if data %}
+                            {% for detail in data %}
+                            <tr>
+                                <th scope="row">{{ detail.id }}</th>
+                                <td>{{ detail.category }}</td>
+                                <td>{{ detail.productcode }}</td>
+                                <td>{{ detail.desc }}</td>
+                                <td>{{ detail.subcategory }}</td>
+
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if expen %}
+                            {% for detail in expen %}
+                            <tr>
+                                <th scope="row">{{ detail.id }}</th>
+                                <td>{{ detail.staffname }}</td>
+                                <td>{{ detail.quantity }}</td>
+                                <td>{{ detail.price }}</td>
+                                <td>{{ detail.address }}</td>
+                                <td>{{ detail.phone }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if staf %}
+                            {% for detail in staf %}
+                            <tr>
+                                <th scope="row">{{ detail.id }}</th>
+
+                                <td>{{ detail.staffname }}</td>
+                                <td>{{ detail.phone }}</td>
+                                <td>{{ detail.address }}</td>
+                                <td>{{ detail.time }}</td>
+                                <td>{{ detail.salary }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if inv %}
+                            {% for detail in inv %}
+                            <tr>
+                                <th scope="row">{{ detail.id }}</th>
+
+                                <td>{{ detail.inventoryname }}</td>
+                                <td>{{ detail.quantity }}</td>
+                                <td>{{ detail.sellingprice }}</td>
+                                <td>{{ detail.costprice }}</td>
+                                <td>{{ detail.category }}</td>
+                                <td>{{ detail.subcategory }}</td>
+                                <td>{{ detail.desc }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if sup %}
+                            {% for detail in sup %}
+                            <tr>
+                                <th scope="row">{{ detail.id }}</th>
+
+                                <td>{{ detail.customername }}</td>
+                                <td>{{ detail.product }}</td>
+                                <td>{{ detail.date }}</td>
+                                <td>{{ detail.time }}</td>
+                                <td>{{ detail.phone }}</td>
+                                <td>{{ detail.address }}</td>
+                                <td>{{ detail.desc }}</td>
+                                <td>{{ detail.sellingprice }}</td>
+                                <td>{{ detail.quantity }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+
+                            {% if customer %}
+                            {% for detail in sup %}
+                            <tr>
+                                <th scope="row">{{ detail.id }}</th>
+
+                                <td>{{ detail.customername }}</td>
+                                <td>{{ detail.address }}</td>
+                                <td>{{ detail.phone }}</td>
+                                <td>{{ detail.product }}</td>
+                                <td>{{ detail.desc }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

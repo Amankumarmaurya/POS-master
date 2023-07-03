@@ -14,6 +14,8 @@ import csv
 import pandas as pd
 from numpy import genfromtxt
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required,permission_required
+from django.core.exceptions import PermissionDenied
 # Create your views here.
 def login(request):
     if request.method == "POST":
@@ -46,8 +48,11 @@ def signout(request):
     logout(request)
     messages.success(request,"Successfully Logged Out")
     return redirect('login')
-
+@permission_required("polls.add_choice", raise_exception=True)
 def inventory(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     if request.method == "POST":
         inventoryname=request.POST.get('invname','')
         category=request.POST.get('cat','')
@@ -64,8 +69,11 @@ def inventory(request):
           messages.error(request,"Your inventory Data Does Not Enter in the Database ") 
 
     return render(request,'Inventory.html')   
-
+@permission_required("polls.add_choice", raise_exception=True)
 def InventoryData(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     data=Inventory.objects.all()
     paginator=Paginator(data,4)
     page_number =request.GET.get('page')
@@ -107,13 +115,13 @@ def inventoryComponent(request):
 
     return render(request,'inventoryComponent.html')            
 def Report(request):
-
+    
     return render(request,'Report.html')
 
 def drive(request):
    
     return render(request,'drive.html')
-
+@login_required
 def dashboard(request):
     pos=POS.objects.values('product', 'sellingprice','id','customername')
     inven=Inventory.objects.values('id')
@@ -136,8 +144,11 @@ def dashboard(request):
 def data(request):
 
     return render(request,'data.html')  
-
+@permission_required("polls.add_choice", raise_exception=True)
 def deliveryProduct(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     if request.method == "POST":
         staffname=request.POST.get('staffname','')
         product=request.POST.get('product','')
@@ -153,7 +164,11 @@ def deliveryProduct(request):
         else:
           messages.error(request,"Your inventory Data Does Not Enter in the Database ") 
     return render(request,'deliveryProduct.html')  
+@permission_required("polls.add_choice", raise_exception=True)
 def deliveryProductdata(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     data=delivery.objects.all()
     paginator=Paginator(data,4)
     page_number =request.GET.get('page')
@@ -164,8 +179,11 @@ def deliveryProductdata(request):
         
         }
     return render(request, 'deliveryProductdata.html',context)  
-
+@permission_required("polls.add_choice", raise_exception=True)
 def product(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     if request.method == "POST":
         productname=request.POST.get('pname')
         category=request.POST.get('cat','')
@@ -179,8 +197,11 @@ def product(request):
         else:
           messages.error(request,"Your product Data Does Not Enter in the Database ") 
     return render(request,'Product.html')     
-
+@permission_required("polls.add_choice", raise_exception=True)
 def productdata(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     data=Product.objects.all()
     paginator=Paginator(data,4)
     page_number =request.GET.get('page')
@@ -218,8 +239,11 @@ def edit_product(request,id):
 
 
 
-
+@permission_required("polls.add_choice", raise_exception=True)
 def staff(request):
+  # Check if the user has the necessary permission
+ if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.") 
  if request.method == "POST":
     staffname=request.POST.get('staffname','')
     phone=request.POST.get('phone','')
@@ -234,8 +258,11 @@ def staff(request):
           messages.error(request,"Your staff Data Does Not Enter in the Database ") 
 
  return render(request,'Staff.html') 
-
+@permission_required("polls.add_choice", raise_exception=True)
 def staffdata(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     data=Staff.objects.all()
     paginator=Paginator(data,4)
     page_number =request.GET.get('page')
@@ -269,8 +296,11 @@ def edit_staff(request,id):
     inc.save()
     return redirect(staffdata)
 
-
+@permission_required("polls.add_choice", raise_exception=True)
 def customer(request):
+    # Check if the user has the necessary permission
+   if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
    if request.method == "POST":
      customername=request.POST.get('customername','')
      address=request.POST.get('add','')
@@ -284,8 +314,11 @@ def customer(request):
      else:
           messages.error(request,"Your customer Data Does Not Enter in the Database ") 
    return render(request,'Customers.html')  
-
+@permission_required("polls.add_choice", raise_exception=True)
 def customerdata(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     data=Customer.objects.all()
     customer=Customer.objects.all()
     paginator=Paginator(data,4)
@@ -322,8 +355,11 @@ def edit_customer(request,id):
     return redirect(customerdata)
 
 
-
+@permission_required("polls.add_choice", raise_exception=True)
 def pos(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     if request.method == "POST":
      customername=request.POST.get('cname','')
      address=request.POST.get('add','')
@@ -342,8 +378,11 @@ def pos(request):
      else:
           messages.error(request,"Your pos Data Does Not Enter in the Database ") 
     return render(request,'postofsale.html') 
-
+@permission_required("polls.add_choice", raise_exception=True)
 def posdata(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     data=POS.objects.all()
     paginator=Paginator(data,4)
     page_number =request.GET.get('page')
@@ -424,8 +463,11 @@ def data_csv_product(request):
 
     return response   
 
-
+@permission_required("polls.add_choice", raise_exception=True)
 def search_view(request):
+     # Check if the user has the necessary permission
+    if not request.user.has_perm("polls.add_choice"):
+        raise PermissionDenied("You don't have permission to add choices.")
     search = request.GET.get('query', '')
     inc = Product.objects.none()
     sup = POS.objects.none()

@@ -26,7 +26,7 @@ def login(request):
 
         if userr is not None:
             authlogin(request, userr)
-            messages.success(request, 'Username OR password is validated.')
+           # messages.success(request, 'Username OR password is validated.')
             return redirect('Dashboard')
         else:
             messages.info(request, 'Username OR password is incorrect.')
@@ -469,6 +469,7 @@ def search_view(request):
     if not request.user.has_perm("polls.add_choice"):
         raise PermissionDenied("You don't have permission to add choices.")
     search = request.GET.get('query', '')
+  
     inc = Product.objects.none()
     sup = POS.objects.none()
     expen = delivery.objects.none()
@@ -476,19 +477,17 @@ def search_view(request):
     inv = Inventory.objects.none()
     customer = Customer.objects.none()
 
-    if search:
-        if len(search) > 10:
+   
+    if len(search) > 10:
             messages.warning(request, "No Search Result are Found.")
-        else:
+    elif search :
             inc = Product.objects.filter(productname__icontains=search)
             sup = POS.objects.filter(customername__icontains=search)  
             expen = delivery.objects.filter(product__icontains=search)  
             staf = Staff.objects.filter(staffname__icontains=search)  
             inv = Inventory.objects.filter(inventoryname__icontains=search)  
             customer = Customer.objects.filter(customername__icontains=search)  
-            messages.info(request, "Search Result are Found.") 
-    else:
-        messages.warning(request, "No Search Result are Found.") 
+           
 
     params = {
         'data': inc,

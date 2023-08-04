@@ -7,13 +7,21 @@
     <title>Searchdata</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+
+    <style>
+      body {
+        font-family: 'Lumanosimo', cursive;
+      }
+      </style> 
 </head>
 
 <body>
-
-   
-    <div class="container">
-        <h1 class="text-center">Results</h1>
+   <br>
+   <br>
+    <div class="container shadow p-3 mb-5 bg-body-tertiary rounded">
+        <br>
+        <h1 class="text-center shadow p-3 mb-5 bg-body-tertiary rounded">Results</h1>
         {% if search %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -27,13 +35,12 @@
         {% endif %}
         
                 
-                <div class="form-contianer">
+                <div class="form-contianer shadow p-3 mb-5 bg-body-tertiary rounded">
                     <!-- <h2 class="text-center mt-3">Inventory Data</h2> -->
-                    <table class="table">
+                    <table class="table ">
                         <thead>
                             <tr>
                                 <th scope="col">SN</th>
-                                <th scope="col">date</th>
                                 <!-- <th scope="col">sells</th> -->
                                 <!-- <th scope="col">Quantity</th>
                   <th scope="col">Amount</th> -->

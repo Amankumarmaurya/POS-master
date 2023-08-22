@@ -48,7 +48,7 @@ def signout(request):
     logout(request)
     messages.success(request,"Successfully Logged Out")
     return redirect('login')
-@permission_required("polls.add_choice", raise_exception=True)
+# @permission_required("polls.add_choice", raise_exception=True)
 def inventory(request):
 
     if request.method == "POST":
@@ -126,28 +126,28 @@ def drive(request):
     return render(request,'drive.html')
 @login_required
 def dashboard(request):
-    pos=POS.objects.values('product', 'sellingprice','id','customername')
-    inven=Inventory.objects.values('id')
-    deliver=delivery.objects.values('id','staffname')
-    data =[item['id'] for item in pos]
-    idata =[item['id'] for item in inven]
-    deliverydata =[item['id'] for item in deliver]
-    # Prepare the data for the chart
-    labels = [item['customername'] for item in pos]
-    chart_data = [item['sellingprice'] for item in pos]
-    context={ 
-         "data" :data,
-         "idata" :idata,
-         "deliverydata" :deliverydata,
-         'chart_labels': labels,
-         'chart_data': chart_data,
-        }
+    # pos=POS.objects.values('product', 'sellingprice','id','customername')
+    # inven=Inventory.objects.values('id')
+    # deliver=delivery.objects.values('id','staffname')
+    # data =[item['id'] for item in pos]
+    # idata =[item['id'] for item in inven]
+    # deliverydata =[item['id'] for item in deliver]
+    # # Prepare the data for the chart
+    # labels = [item['customername'] for item in pos]
+    # chart_data = [item['sellingprice'] for item in pos]
+    # context={ 
+    #      "data" :data,
+    #      "idata" :idata,
+    #      "deliverydata" :deliverydata,
+    #      'chart_labels': labels,
+    #      'chart_data': chart_data,
+    #     }
        
-    return render(request,'Dashboard.html' ,context)   
+    return render(request,'Dashboard.html')   
 def data(request):
 
     return render(request,'data.html')  
-@permission_required("polls.add_choice", raise_exception=True)
+# @permission_required("polls.add_choice", raise_exception=True)
 def deliveryProduct(request):
 
     if request.method == "POST":
@@ -209,7 +209,7 @@ def delete_delivery(request,id):
 
     return redirect(InventoryData)
 
-@permission_required("polls.add_choice", raise_exception=True)
+# @permission_required("polls.add_choice", raise_exception=True)
 def product(request):
    
     if request.method == "POST":
@@ -271,11 +271,9 @@ def delete_product(request,id):
 
 
 
-@permission_required("polls.add_choice", raise_exception=True)
+# @permission_required("polls.add_choice", raise_exception=True)
 def staff(request):
-  # Check if the user has the necessary permission
- if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.") 
+
  if request.method == "POST":
     staffname=request.POST.get('staffname','')
     phone=request.POST.get('phone','')
@@ -330,11 +328,9 @@ def edit_staff(request,id):
 def delete_staff(request,id):
     inc=Staff.objects.get(pk=id)
     return redirect(staffdata)
-@permission_required("polls.add_choice", raise_exception=True)
+# @permission_required("polls.add_choice", raise_exception=True)
 def customer(request):
-    # Check if the user has the necessary permission
-   if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+
    if request.method == "POST":
      customername=request.POST.get('customername','')
      address=request.POST.get('add','')
@@ -391,11 +387,9 @@ def delete_customer(request,id):
     inc=Customer.objects.get(pk=id)
     return redirect(customerdata)
 
-@permission_required("polls.add_choice", raise_exception=True)
+# @permission_required("polls.add_choice", raise_exception=True)
 def pos(request):
-     # Check if the user has the necessary permission
-    if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+
     if request.method == "POST":
      customername=request.POST.get('cname','')
      address=request.POST.get('add','')

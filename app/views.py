@@ -50,9 +50,7 @@ def signout(request):
     return redirect('login')
 @permission_required("polls.add_choice", raise_exception=True)
 def inventory(request):
-     # Check if the user has the necessary permission
-    if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+
     if request.method == "POST":
         inventoryname=request.POST.get('invname','')
         category=request.POST.get('cat','')
@@ -109,7 +107,12 @@ def edit_inventory(request,id):
     
     
     inc.save()
-    return redirect(InventoryData)    
+    return redirect(InventoryData)   
+
+def delete_inventory(request,id):
+    inc=Inventory.objects.get(pk=id)
+
+    return redirect(InventoryData)  
 
 def inventoryComponent(request):
 
@@ -146,9 +149,7 @@ def data(request):
     return render(request,'data.html')  
 @permission_required("polls.add_choice", raise_exception=True)
 def deliveryProduct(request):
-     # Check if the user has the necessary permission
-    if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+
     if request.method == "POST":
         staffname=request.POST.get('staffname','')
         product=request.POST.get('product','')
@@ -179,11 +180,38 @@ def deliveryProductdata(request):
         
         }
     return render(request, 'deliveryProductdata.html',context)  
+
+def updatedelivery(request,id):
+     inc=delivery.objects.get(pk=id)
+     data=Product.objects.all()
+
+
+     context={
+        'inc':inc,
+        'view':data
+     }
+     return render(request,'updatedelivery.html',context)  
+
+def edit_delivery(request,id):
+    inc=delivery.objects.get(pk=id)
+    inc.staffname=request.POST['staffname']
+    inc.product=request.POST['product']
+    inc.desc=request.POST['desc']
+    inc.quantity=request.POST['quantity']
+    inc.price=request.POST['price']
+    inc.address=request.POST['address']
+    inc.phone=request.POST['phone']
+    
+    inc.save()
+    return redirect(productdata)
+def delete_delivery(request,id):
+    inc=delivery.objects.get(pk=id)
+
+    return redirect(InventoryData)
+
 @permission_required("polls.add_choice", raise_exception=True)
 def product(request):
-     # Check if the user has the necessary permission
-    if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+   
     if request.method == "POST":
         productname=request.POST.get('pname')
         category=request.POST.get('cat','')
@@ -236,6 +264,10 @@ def edit_product(request,id):
     
     inc.save()
     return redirect(productdata)
+def delete_product(request,id):
+    inc=Product.objects.get(pk=id)
+
+    return redirect(InventoryData)
 
 
 
@@ -295,7 +327,9 @@ def edit_staff(request,id):
     
     inc.save()
     return redirect(staffdata)
-
+def delete_staff(request,id):
+    inc=Staff.objects.get(pk=id)
+    return redirect(staffdata)
 @permission_required("polls.add_choice", raise_exception=True)
 def customer(request):
     # Check if the user has the necessary permission
@@ -353,7 +387,9 @@ def edit_customer(request,id):
     
     inc.save()
     return redirect(customerdata)
-
+def delete_customer(request,id):
+    inc=Customer.objects.get(pk=id)
+    return redirect(customerdata)
 
 @permission_required("polls.add_choice", raise_exception=True)
 def pos(request):
@@ -380,9 +416,7 @@ def pos(request):
     return render(request,'postofsale.html') 
 @permission_required("polls.add_choice", raise_exception=True)
 def posdata(request):
-     # Check if the user has the necessary permission
-    if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+
     data=POS.objects.all()
     paginator=Paginator(data,4)
     page_number =request.GET.get('page')
@@ -417,7 +451,11 @@ def edit_pos(request,id):
     inc.desc=request.POST['desc']
     
     inc.save()
-    return redirect(posdata)    
+    return redirect(posdata)  
+
+def delete_pos(request,id):
+    inc=POS.objects.get(pk=id)
+    return redirect(posdata)  
 
 # inventories CSV file
 def data_csv(request):
@@ -465,9 +503,7 @@ def data_csv_product(request):
 
 @permission_required("polls.add_choice", raise_exception=True)
 def search_view(request):
-     # Check if the user has the necessary permission
-    if not request.user.has_perm("polls.add_choice"):
-        raise PermissionDenied("You don't have permission to add choices.")
+
     search = request.GET.get('query', '')
   
     inc = Product.objects.none()

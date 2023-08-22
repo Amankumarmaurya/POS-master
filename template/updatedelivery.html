@@ -1,0 +1,75 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delivery</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="b-example-divider"></div>
+
+    {% include 'navigation.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Inventory</li>
+        </ol>
+      </nav>
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message:</strong> {{ message }}.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
+
+
+  <h1 class="text-center pt-5">Delivery</h1>
+  {% if inc %}
+  <h1 class="text-center pt-5">{{ inc.id }}</h1>
+  <form method="POST" action="{% url 'edit_delivery' inc.id %}" class="row g-3 shadow p-3 mb-5 bg-body-tertiary rounded">
+    {% csrf_token %}
+    <div class="col-md-4">
+      <label for="exampleInputPassword1" class="form-label">Staff Name:</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" name="Staffname" value="{{ inc.staffname }}">
+    </div>
+    <div class="col-md-4">
+      <label for="exampleInputPassword1" class="form-label">Product</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" name="Product" value="{{ inc.product }}">
+    </div>
+    <div class="col-md-4">
+      <label for="exampleInputPassword1" class="form-label">Description</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" name="Description" value="{{ inc.desc }}">
+    </div>
+    <div class="col-md-4">
+      <label for="exampleInputPassword1" class="form-label">Quantity</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" name="Quantity" value="{{ inc.quantity }}">
+    </div>
+    <div class="col-md-4">
+      <label for="exampleInputPassword1" class="form-label">Price</label>
+      <input type="text" class="form-control" id="exampleInputPassword1" name="Price" value="{{ inc.price }}">
+    </div>
+    <div class="col-md-4">
+        <label for="exampleInputPassword1" class="form-label">Address</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="Address" value="{{ inc.address }}">
+      </div>
+      <div class="col-md-4">
+        <label for="exampleInputPassword1" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="Phone" value="{{ inc.phone }}">
+      </div>
+      
+ 
+   
+    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+  </form>
+  {% endif %}
+</div>
+  
+</main>
+    
+
+  </body>
+</html>

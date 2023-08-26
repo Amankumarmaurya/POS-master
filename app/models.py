@@ -53,10 +53,7 @@ class Product(models.Model):
         return str(self.productname)
 
 class POS(models.Model):
-    customername=models.OneToOneField(
-        Customer,
-        on_delete=models.CASCADE,
-    )
+    customername=models.CharField(max_length=50)
     product=models.CharField(max_length=50)
     date=models.CharField(max_length=50)
     time=models.CharField(max_length=50)

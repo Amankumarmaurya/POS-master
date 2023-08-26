@@ -111,19 +111,10 @@ def edit_inventory(request,id):
 
 def delete_inventory(request,id):
     inc=Inventory.objects.get(pk=id)
-
+    inc.delete()
     return redirect(InventoryData)  
 
-def inventoryComponent(request):
 
-    return render(request,'inventoryComponent.html')            
-def Report(request):
-    
-    return render(request,'Report.html')
-
-def drive(request):
-   
-    return render(request,'drive.html')
 @login_required
 def dashboard(request):
     # pos=POS.objects.values('product', 'sellingprice','id','customername')
@@ -203,11 +194,11 @@ def edit_delivery(request,id):
     inc.phone=request.POST['phone']
     
     inc.save()
-    return redirect(productdata)
+    return redirect(deliveryProductdata)
 def delete_delivery(request,id):
     inc=delivery.objects.get(pk=id)
-
-    return redirect(InventoryData)
+    inc.delete()    
+    return redirect(deliveryProductdata)
 
 # @permission_required("polls.add_choice", raise_exception=True)
 def product(request):
@@ -266,8 +257,8 @@ def edit_product(request,id):
     return redirect(productdata)
 def delete_product(request,id):
     inc=Product.objects.get(pk=id)
-
-    return redirect(InventoryData)
+    inc.delete()
+    return redirect(productdata)
 
 
 
@@ -327,6 +318,7 @@ def edit_staff(request,id):
     return redirect(staffdata)
 def delete_staff(request,id):
     inc=Staff.objects.get(pk=id)
+    inc.delete()
     return redirect(staffdata)
 # @permission_required("polls.add_choice", raise_exception=True)
 def customer(request):
@@ -385,6 +377,7 @@ def edit_customer(request,id):
     return redirect(customerdata)
 def delete_customer(request,id):
     inc=Customer.objects.get(pk=id)
+    inc.delete()
     return redirect(customerdata)
 
 # @permission_required("polls.add_choice", raise_exception=True)
@@ -449,6 +442,7 @@ def edit_pos(request,id):
 
 def delete_pos(request,id):
     inc=POS.objects.get(pk=id)
+    inc.delete()
     return redirect(posdata)  
 
 # inventories CSV file
